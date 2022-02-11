@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-flink-streaming</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Flink Streaming</name>
+	<description>SPAF Flink Streaming provider</description>
+
+	<properties>
+		<flink.version>1.14.3</flink.version>
+		<scala.binary.version>2.12</scala.binary.version>
+		<kryo.version>4.0.2</kryo.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- At release time, Flink should not be packaged into the JAR file since it is provided by the runtime environment. -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- This version of Kryo will override Flink's declared depdendency (version 2.24.0) -->
+		<!-- This is needed to avoid IllegalAccessError exception -->
+		<!-- See: https://tinyurl.com/flink-kryo-illegalAccessError -->
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>kryo</artifactId>
+			<version>${kryo.version}</version>
+		</dependency>
+	</dependencies>
+</project>

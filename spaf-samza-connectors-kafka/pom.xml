@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-samza-connectors-kafka</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Samza : Connectors : Kafka</name>
+	<description>SPAF Samza Connectors for Kafka</description>
+	
+	<properties>
+		<scala.version>2.12</scala.version>
+		<samza.version>1.6.0</samza.version>
+		<kafka.version>0.11.0.2</kafka.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-connectors-kafka</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-samza</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Apache Samza - Apache Kafka Integration-->
+		<dependency>
+			<groupId>org.apache.samza</groupId>
+			<artifactId>samza-kafka_${scala.version}</artifactId>
+			<version>${samza.version}</version>
+		</dependency>
+
+		<!-- Apache Kafka -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_${scala.version}</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+	</dependencies>
+</project>

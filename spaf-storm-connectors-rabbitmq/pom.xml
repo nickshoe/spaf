@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-storm-connectors-rabbitmq</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Storm : Connectors : RabbitMQ</name>
+	<description>SPAF Storm Connectors for RabbitMQ</description>
+
+	<properties>
+		<storm.version>2.3.0</storm.version>
+		<storm-rabbitmq.version>1.0.1</storm-rabbitmq.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-connectors-rabbitmq</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-storm</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- This is necessary because "storm-client" is a transitive dependency with "provided" scope in "spaf-storm", 
+		     and as such it would not be included in this project. 
+		     See: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope -->
+		<!-- Apache Storm -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-client</artifactId>
+			<version>${storm.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Storm - RabbitMQ Integration library-->
+		<dependency>
+			<groupId>ru.burov4j.storm</groupId>
+			<artifactId>storm-rabbitmq</artifactId>
+			<version>${storm-rabbitmq.version}</version>
+		</dependency>
+	</dependencies>
+</project>

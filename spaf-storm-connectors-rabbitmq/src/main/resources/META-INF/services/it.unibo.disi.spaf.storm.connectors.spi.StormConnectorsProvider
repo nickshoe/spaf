@@ -1,0 +1,4 @@
+#
+# RabbitMQ
+#
+it.unibo.disi.spaf.storm.connectors.rabbitmq.RabbitMQStormConnectorsProvider

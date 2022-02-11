@@ -1,0 +1,4 @@
+#
+# Kafka
+#
+it.unibo.disi.spaf.spark.streaming.connectors.kafka.KafkaSparkStreamingConnectorsProvider

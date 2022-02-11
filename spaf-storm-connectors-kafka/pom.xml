@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-storm-connectors-kafka</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Storm : Connectors : Kafka</name>
+	<description>SPAF Storm Connectors for Kafka</description>
+
+	<properties>
+		<storm.version>2.3.0</storm.version>
+		<storm.kafka.client.version>0.11.0.3</storm.kafka.client.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-connectors-kafka</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-storm</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- This is necessary because "storm-client" is a transitive dependency with "provided" scope in "spaf-storm", 
+		     and as such it would not be included in this project. 
+		     See: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope -->
+		<!-- Apache Storm -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-client</artifactId>
+			<version>${storm.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Apache Storm - Kafka Integration-->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-kafka-client</artifactId>
+			<version>${storm.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>${storm.kafka.client.version}</version>
+		</dependency>
+	</dependencies>
+</project>

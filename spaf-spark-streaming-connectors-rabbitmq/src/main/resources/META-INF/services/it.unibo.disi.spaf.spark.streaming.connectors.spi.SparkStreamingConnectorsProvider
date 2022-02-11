@@ -1,0 +1,4 @@
+#
+# RabbitMQ
+#
+it.unibo.disi.spaf.spark.streaming.connectors.rabbitmq.RabbitMQSparkStreamingConnectorsProvider

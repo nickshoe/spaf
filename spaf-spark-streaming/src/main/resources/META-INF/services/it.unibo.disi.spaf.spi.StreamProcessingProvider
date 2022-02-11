@@ -1,0 +1,4 @@
+#
+# Spark Streaming
+#
+it.unibo.disi.spaf.spark.streaming.SparkStreamingStreamProcessingProvider

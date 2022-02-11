@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-samza</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Samza</name>
+	<description>SPAF Samza provider</description>
+
+	<properties>
+		<scala.version>2.12</scala.version>
+		<samza.version>1.6.0</samza.version>
+		<kafka.version>0.11.0.2</kafka.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Apache Samza -->
+		<dependency>
+			<groupId>org.apache.samza</groupId>
+			<artifactId>samza-api</artifactId>
+			<version>${samza.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.samza</groupId>
+			<artifactId>samza-core_${scala.version}</artifactId>
+			<version>${samza.version}</version>
+		</dependency>
+	</dependencies>
+</project>

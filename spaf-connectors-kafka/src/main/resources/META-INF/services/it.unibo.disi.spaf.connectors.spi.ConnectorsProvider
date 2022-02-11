@@ -1,0 +1,4 @@
+#
+# Kafka
+#
+it.unibo.disi.spaf.api.connectors.kafka.KafkaConnectorsProvider

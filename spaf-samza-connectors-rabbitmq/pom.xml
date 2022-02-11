@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-samza-connectors-rabbitmq</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Samza : Connectors : RabbitMQ</name>
+	<description>SPAF Samza Connectors for RabbitMQ</description>
+
+	<properties>
+		<samza.version>1.6.0</samza.version>
+		<amqp-client.version>5.14.1</amqp-client.version>
+		<samza-rabbitmq.version>0.0.1</samza-rabbitmq.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-connectors-rabbitmq</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-samza</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Apache Samza - RabbitMQ Integration-->
+		<dependency>
+			<groupId>io.github.nickshoe</groupId>
+			<artifactId>samza-rabbitmq</artifactId>
+			<version>${samza-rabbitmq.version}</version>
+		</dependency>
+	</dependencies>
+</project>

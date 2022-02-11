@@ -1,0 +1,73 @@
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
+*.class
+
+######################
+# Directories
+######################
+/bin/
+/deploy/
+
+######################
+# Maven
+######################
+/target/
+
+######################
+# Eclipse
+######################
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
+
+# External tool builders
+.externalToolBuilders/**
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# STS-specific
+/.sts4-cache/*
+
+######################
+# IntelliJ
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-flink-streaming-connectors-kafka</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Flink Streaming : Connectors : Kafka</name>
+	<description>SPAF Flink Streaming Connectors for Kafka</description>
+
+	<properties>
+		<flink.version>1.14.3</flink.version>
+		<scala.binary.version>2.12</scala.binary.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-connectors-kafka</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-flink-streaming</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- This is necessary because "flink-streaming-java" is a transitive dependency with "provided" scope in "spaf-flink-streaming", 
+		     and as such it would not be included in this project. 
+		     See: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Apache Flink Kafka Integration -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+	</dependencies>
+</project>

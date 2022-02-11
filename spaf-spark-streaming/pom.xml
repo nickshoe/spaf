@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-spark-streaming</artifactId>
+	<packaging>jar</packaging>
+	<name>SPAF : Spark Streaming</name>
+	<description>SPAF Spark Streaming provider</description>
+
+	<properties>
+		<spark-streaming.version>3.2.0</spark-streaming.version>
+		<log4j-1.2-api.version>2.17.1</log4j-1.2-api.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Apache Spark Streaming (provided) -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_2.12</artifactId>
+			<version>${spark-streaming.version}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<!-- Exclude Log4j 1.x -->
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<!-- Exclude Log4j 1.2 binding for SLF4J -->
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- This is needed since Apache Spark has some legacy code using Log4j 1.2 directly, this dependency translates them to Log4j 2 calls -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
+			<version>${log4j-1.2-api.version}</version>
+		</dependency>
+	</dependencies>
+</project>

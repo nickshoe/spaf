@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>it.unibo.disi</groupId>
+		<artifactId>spaf</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>spaf-examples</artifactId>
+	<packaging>pom</packaging>
+	<name>SPAF : Examples</name>
+
+	<modules>
+		<module>spaf-examples-simple</module>
+		<module>spaf-examples-face</module>
+		<module>spaf-examples-alpr</module>
+		<module>spaf-examples-ocr</module>
+		<module>spaf-examples-utils</module>
+	</modules>
+
+	<properties>
+		<scala.version>2.12</scala.version>
+
+		<spark-streaming.version>3.2.0</spark-streaming.version>
+		<flink.version>1.14.3</flink.version>
+		<storm.version>2.3.0</storm.version>
+		<samza.version>1.6.0</samza.version>
+
+		<maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>it.unibo.disi</groupId>
+			<artifactId>spaf-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- This plugin provides the capability to package the artifact in an 
+				uber-jar, including its dependencies and to shade - i.e. rename - the packages 
+				of some of the dependencies. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${maven-shade-plugin.version}</version>
+				<executions>
+					<!-- Run shade goal on package phase -->
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!-- remove all signature files from the signed jar, before copying the 
+					unpacked files into your final build jar file -->
+				<!-- https://stackoverflow.com/questions/20045744/java-lang-securityexception-no-manifest-section-for-signature-file-entry -->
+				<configuration>
+					<finalName>${project.artifactId}-${project.version}-uber</finalName>
+					<transformers>
+						<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+					</transformers>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>spark-streaming</id>
+			<dependencies>
+				<!-- SPAF Spark Streaming provider -->
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-spark-streaming</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-spark-streaming-connectors-kafka</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-spark-streaming-connectors-rabbitmq</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+
+				<!-- Apache Spark Streaming -->
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-streaming_${scala.version}</artifactId>
+					<version>${spark-streaming.version}</version>
+					<scope>provided</scope>
+					<exclusions>
+						<!-- Exclude Log4j 1.x -->
+						<exclusion>
+							<groupId>log4j</groupId>
+							<artifactId>log4j</artifactId>
+						</exclusion>
+						<!-- Exclude Log4j 1.2 binding for SLF4J -->
+						<exclusion>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-log4j12</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>spark-streaming_local</id>
+			<dependencies>
+				<!-- Apache Spark Streaming (for development) -->
+				<dependency>
+					<groupId>org.apache.spark</groupId>
+					<artifactId>spark-streaming_${scala.version}</artifactId>
+					<version>${spark-streaming.version}</version>
+					<exclusions>
+						<!-- Exclude Log4j 1.x -->
+						<exclusion>
+							<groupId>log4j</groupId>
+							<artifactId>log4j</artifactId>
+						</exclusion>
+						<!-- Exclude Log4j 1.2 binding for SLF4J -->
+						<exclusion>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-log4j12</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>flink-streaming</id>
+			<dependencies>
+				<!-- SPAF Flink Streaming provider-->
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-flink-streaming</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-flink-streaming-connectors-kafka</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-flink-streaming-connectors-rabbitmq</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+
+				<!-- Apache Flink  -->
+				<dependency>
+					<groupId>org.apache.flink</groupId>
+					<artifactId>flink-streaming-java_${scala.version}</artifactId>
+					<version>${flink.version}</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>flink-streaming_local</id>
+			<dependencies>
+				<!-- Apache Flink (for development)  -->
+				<dependency>
+					<groupId>org.apache.flink</groupId>
+					<artifactId>flink-streaming-java_${scala.version}</artifactId>
+					<version>${flink.version}</version>
+				</dependency>
+				<!-- The flink-clients dependency is only necessary to invoke the Flink program locally. -->
+				<dependency>
+					<groupId>org.apache.flink</groupId>
+					<artifactId>flink-clients_${scala.version}</artifactId>
+					<version>${flink.version}</version>
+				</dependency>
+				<!-- This depdendency is only necessary for local development, opt-out in release profile -->
+				<dependency>
+					<groupId>org.apache.flink</groupId>
+					<artifactId>flink-runtime-web_${scala.version}</artifactId>
+					<version>${flink.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>storm</id>
+			<dependencies>
+				<!-- SPAF Storm provider-->
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-storm</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-storm-connectors-kafka</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-storm-connectors-rabbitmq</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+
+				<!-- Apache Storm -->
+				<dependency>
+					<groupId>org.apache.storm</groupId>
+					<artifactId>storm-client</artifactId>
+					<version>${storm.version}</version>
+					<scope>provided</scope>
+					<exclusions>
+						<!-- Exclude Log4j SLF4J provider 1.x -->
+						<exclusion>
+							<groupId>org.apache.logging.log4j</groupId>
+							<artifactId>log4j-slf4j-impl</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>storm_local</id>
+			<dependencies>
+				<!-- Apache Storm (for development) -->
+				<dependency>
+					<groupId>org.apache.storm</groupId>
+					<artifactId>storm-client</artifactId>
+					<version>${storm.version}</version>
+					<exclusions>
+						<!-- Exclude Log4j SLF4J provider 1.x -->
+						<exclusion>
+							<groupId>org.apache.logging.log4j</groupId>
+							<artifactId>log4j-slf4j-impl</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>org.apache.storm</groupId>
+					<artifactId>storm-server</artifactId>
+					<version>${storm.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<!-- TODO: implement samza support for cluster deployment -->
+		<profile>
+			<id>samza</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.apache.samza</groupId>
+					<artifactId>samza-yarn_${scala.version}</artifactId>
+					<version>${samza.version}</version>
+					<exclusions>
+						<!-- zookeeper dependency pulls in log4j1; exclude log4j1 components since we want to use log4j2 components -->
+						<exclusion>
+							<groupId>log4j</groupId>
+							<artifactId>log4j</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-log4j12</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>samza_local</id>
+			<dependencies>
+				<!-- SPAF Samza provider-->
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-samza</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-samza-connectors-kafka</artifactId>
+					<version>${project.version}</version>
+					<exclusions>
+						<!-- Exclude Log4j 1.x -->
+						<exclusion>
+							<groupId>log4j</groupId>
+							<artifactId>log4j</artifactId>
+						</exclusion>
+						<!-- Exclude Log4j 1.2 binding for SLF4J -->
+						<exclusion>
+							<groupId>org.slf4j</groupId>
+							<artifactId>slf4j-log4j12</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>it.unibo.disi</groupId>
+					<artifactId>spaf-samza-connectors-rabbitmq</artifactId>
+					<version>${project.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+</project>
