@@ -28,7 +28,7 @@ The `spaf-example` Maven project is the parent project for the actual example pr
 
 > Statement by the author
 >
-> The `alpr`, `face` and `ocr` examples were not conceived in the context of my work of thesis. These were pre-existing application examples developed by other students and used another framework. These applications were refactored and adapted to use SPAF.
+> The "alpr", "face" and "ocr" examples were not conceived in the context of my thesis work. They were pre-existing application examples developed by other students, using a different framework. These applications have been refactored and adapted to use SPAF.
 
 All the example projects inherit their dependencies from the parent project (`spaf-example`) by activating Maven profiles.\
 Depending on the activated profiles, an example project can then be executed on a particular stream processing framework/engine and either on a distributed or local environment.\
